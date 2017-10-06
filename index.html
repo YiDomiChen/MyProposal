@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+  <title>Test</title>
+</head>
+<body>
+  It is <span id="value"> </span>today
+   <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCCMcd6IQe1VjhjElv-ExFqOYAdD14S4v0",
+      authDomain: "myproposal-be581.firebaseapp.com",
+      databaseURL: "https://myproposal-be581.firebaseio.com",
+      projectId: "myproposal-be581",
+      storageBucket: "myproposal-be581.appspot.com",
+      messagingSenderId: "128814836934"
+    };
+    firebase.initializeApp(config);
+
+    var value = document.getElementById("value");
+    var dbRef = firebase.database().ref().child("User/004");
+    dbRef.on('value', function(snap) {
+      snap.forEach(function(child) {
+        console.log(child.key + ":" + child.val()["email"]);
+      });
+      value.innerText = snap.val()["email"];
+    });
+  </script>
+</body>
+</html>
+
