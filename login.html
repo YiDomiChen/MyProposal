@@ -366,35 +366,29 @@ form {
 	const btnLogout = document.getElementById('btnLogout');
 	
 	//add login
-	btnLogin.addEventListener('click', e => {
-	
-	const email =txtEmail.value;
-	const pass =txtPassword.value;
-	const auth=firebase.auth();
-	
-	//sign in
-	const promise= auth.signInWithEmailAndPassword(email,pass);
-	promise.catch(e => console.log(e.message));
-	
-	
-	
+	btnLogin.addEventListener('click', e => {	
+  	const email =txtEmail.value;
+  	const pass =txtPassword.value;
+  	const auth=firebase.auth();
+  	//sign in
+  	const promise= auth.signInWithEmailAndPassword(email,pass);
+  	promise.catch(e => console.log(e.message));
 	});
 	
 	//signup
 	btnSignUp.addEventListener('click', e =>{
-	//TODO:check 4 real email
-	const email =txtEmail.value;
-	const pass =txtPassword.value;
-	const auth=firebase.auth();
-	
-
-	
-	//sign in
-	const promise= auth.createUserWithEmailAndPassword(email,pass);
-	promise
-		//.then(user => console.log(user))
-		.catch(e => console.log(e.message));
-	
+    //TODO:check 4 real email
+  	const email =txtEmail.value;
+    const pass =txtPassword.value;
+    const auth=firebase.auth();	
+  	//sign in
+    const promise= auth.createUserWithEmailAndPassword(email,pass);
+    var uid = Math.random().toString(36).substr(2);
+    firebase.database().ref("User/" + uid).set({
+      email: email,
+      password: pass
+    });
+    promise.catch(e => console.log(e.message));	//.then(user => console.log(user))
 	});
 	
 	btnLogout.addEventListener('click', e => {
