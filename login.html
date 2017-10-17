@@ -7,7 +7,8 @@
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script>
-  <title>Test</title>
+ 
+  
   
   <!--<link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -339,18 +340,19 @@ form {
 	<!--button id="btnSignUp" class="btn btn-secondary">
 	 Sign up
 	</button-->
-    <a href = "register.html">Not yet register? Register</a>
+    
 	
 	<button id="btnLogout" class="btn btn-action hide">
 	 Log out
 	</button>
+  <a href = "signup.html">Not yet register? Register</a>
     </div>
             <div class="container" style = "background-color:#FFF" style="width:90%">
             </div>
   </div>
 	
 	
-  
+   
    <script>
     // Initialize Firebase
     var config = {
@@ -381,7 +383,7 @@ form {
 	});
 	
 	//signup
-	btnSignUp.addEventListener('click', e =>{
+	/*btnSignUp.addEventListener('click', e =>{
     //TODO:check 4 real email
   	const email =txtEmail.value;
     const pass =txtPassword.value;
@@ -394,7 +396,7 @@ form {
       password: pass
     });
     promise.catch(e => console.log(e.message));	//.then(user => console.log(user))
-	});
+	});*/
 	
 	btnLogout.addEventListener('click', e => {
 		firebase.auth().signOut();
@@ -427,14 +429,14 @@ form {
 	//auth.onAuthStateChanged(firebaseUser => { });
 	//https://www.youtube.com/watch?v=-OKrloDzGpU
 	
-    var value = document.getElementById("value");
+   /* var value = document.getElementById("value");
     var dbRef = firebase.database().ref().child("User/001");
     dbRef.on('value', function(snap) {
       snap.forEach(function(child) {
         console.log(child.key + ":" + child.val()["email"]);
       });
       value.innerText = snap.val()["email"];
-    });
+    });*/
   </script>
 </body>
 </html>
