@@ -472,7 +472,7 @@ function regist(){
   var rpass=document.getElementById('txtRePassword').value;      
   //var email=document.getElementById('email').value;   
   
-   if ((pass_error == "" && rpass_error == "" )&&(pass_error != "" && rpass != "" )) {       
+   if ((pass_error == "" && rpass_error == "" )&&(pass != "" && rpass != "" )) {       
     alert ("Congratulation, you have successfully registed!");  
     const txtEmail =document.getElementById('txtEmail');
     const txtPassword = document.getElementById('txtPassword');
