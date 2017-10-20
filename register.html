@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset="utf-8">    
+<title>Register!</title>  
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script>
- 
-  
-  
-  <!--<link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet"> -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  
+  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script> 
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
 <style>
 body {
     background:#eee;
@@ -265,6 +261,22 @@ input[type=password]{
   box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
   border: solid 0px #cbc9c9;
 }
+#icon1 {
+  display: inline-block;
+  width: 325px;
+  background-color: #3a57af;
+  padding: 8px 0px 8px 15px;
+  margin-left: 15px;
+  -webkit-border-radius: 4px 0px 0px 4px; 
+  -moz-border-radius: 4px 0px 0px 4px; 
+  border-radius: 4px 4px 4px 4px;
+  color: white;
+  -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+  -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+  box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+  border: solid 0px #cbc9c9;
+  text-align: center;
+}
 
 .accounttype{
   margin-left: 8px;
@@ -322,39 +334,9 @@ form {
                 background-color:#fafafa;
                 color:#207cca;
 }
-</style>  
-</head>
-<body>
-  <h1>Login Form</h1>
-  <div class="container">
-  	<label id="icon" for="name"><i class="icon-envelope "><b>Email</b><span class = "front_input"></span></i></label>
-   
-	<input id="txtEmail" type="text" placeholder="Email"><br>
-	<label id="icon" for="name"><i class="icon-envelope "><b>Password</b><span class = "front_input"></span></i></label>
-	<input id="txtPassword" type="password" placeholder="Password"><br>
-	
-	<button id="btnLogin" class="btn btn-action">
-	 Log in
-	</button>
-	
-	<!--button id="btnSignUp" class="btn btn-secondary">
-	 Sign up
-	</button-->
-    
-	
-	<button id="btnLogout" class="btn btn-action hide">
-	 Log out
-	</button>
-  <a href = "signup.html">Not yet register? Register</a>
-    </div>
-            <div class="container" style = "background-color:#FFF" style="width:90%">
-            </div>
-  </div>
-	
-	
-   
-   <script>
-    // Initialize Firebase
+</style>
+<script type="text/javascript">  
+// Initialize Firebase
     var config = {
       apiKey: "AIzaSyCCMcd6IQe1VjhjElv-ExFqOYAdD14S4v0",
       authDomain: "myproposal-be581.firebaseapp.com",
@@ -364,13 +346,13 @@ form {
       messagingSenderId: "128814836934"
     };
     firebase.initializeApp(config);
-	//use for auth
-	//Get  elements
+	
 	const txtEmail =document.getElementById('txtEmail');
 	const txtPassword = document.getElementById('txtPassword');
+	//const txtRePassword = document.getElementById('txtRePassword');
 	const btnLogin = document.getElementById('btnLogin');
 	const btnSignUp = document.getElementById('btnSignUp');
-	const btnLogout = document.getElementById('btnLogout');
+  const btnLogout = document.getElementById('btnLogout');
 	
 	//add login
 	btnLogin.addEventListener('click', e => {	
@@ -381,12 +363,13 @@ form {
   	const promise= auth.signInWithEmailAndPassword(email,pass);
   	promise.catch(e => console.log(e.message));
 	});
+//signup
 	
-	//signup
-	/*btnSignUp.addEventListener('click', e =>{
+	btnSignUp.addEventListener('click', e =>{
     //TODO:check 4 real email
   	const email =txtEmail.value;
     const pass =txtPassword.value;
+	const repass =txtRePassword.value;
     const auth=firebase.auth();	
   	//sign in
     const promise= auth.createUserWithEmailAndPassword(email,pass);
@@ -396,12 +379,12 @@ form {
       password: pass
     });
     promise.catch(e => console.log(e.message));	//.then(user => console.log(user))
-	});*/
-	
-	btnLogout.addEventListener('click', e => {
-		firebase.auth().signOut();
 	});
 	
+	btnLogout.addEventListener('click', e => {
+    firebase.auth().signOut();
+  });
+
 	//add a realtime listener
 	firebase.auth().onAuthStateChanged(firebaseUser =>{
 		if (firebaseUser){
@@ -422,21 +405,115 @@ form {
 			btnLogout.classList.add('hide');
 		}
 	});
-	
-	//const auth = firebase.auth();
-	//auth.signInWithEmailAndPassword(email,pass);
-	//auth.createUserWithEmailAndPassword(email,pass);
-	//auth.onAuthStateChanged(firebaseUser => { });
-	//https://www.youtube.com/watch?v=-OKrloDzGpU
-	
-   /* var value = document.getElementById("value");
-    var dbRef = firebase.database().ref().child("User/001");
-    dbRef.on('value', function(snap) {
-      snap.forEach(function(child) {
-        console.log(child.key + ":" + child.val()["email"]);
-      });
-      value.innerText = snap.val()["email"];
-    });*/
-  </script>
+/*var _pass;     
+/**      *Check user name        */      
+/*String.prototype.Trim = function() {      
+return this.replace(/(^\s*)|(\s*$)/g, ""); }      //---------------------------------------------------------------------------     
+ 
+		  /**      *check password    */      //---------------------------------------------------------------------------     
+		 /* function check_pass(){      
+		  var pass;       
+		  pass = document.getElementById('pass').value;      
+		  pass = pass.Trim();      
+		  _pass = pass;      
+		  if (pass == "") {        
+		  document.getElementById('pass_error').innerHTML = "Password cannot be null"; 
+
+      		} 
+			else {         
+				if (/^\w{6,20}$/.test(pass)) {          
+					document.getElementById('pass_error').innerHTML = "";         	} 
+				else {          
+					document.getElementById('pass_error').innerHTML = "6 ~ 20 character【0-9】【a-z-A-Z】";         
+				}             
+			}      
+		}     
+		/**      *check Email     */      //---------------------------------------------------------------------------     
+		/*function check_email(){      
+			var email;       
+			email = document.getElementById('email').value;      
+			email = email.Trim();      
+			if (email == "") {        
+				document.getElementById('email_error').innerHTML = "Email";       
+			} 
+			else {         
+				if (/^[\w-]+[\.]*[\w-]+[@][\w\-]{1,}([.]([\w\-]{1,})){1,3}$/.test(email)) {         
+					document.getElementById('email_error').innerHTML = "";         
+					} 
+					else {          
+						document.getElementById('email_error').innerHTML = "Email";         
+						}             
+					}      
+				}         
+/**      *check rpass     */      //---------------------------------------------------------------------------     
+/*function check_rpass(){      
+	var rpass;       
+	rpass = document.getElementById('rpass').value;      
+	rpass = rpass.Trim();      
+	if (rpass == "") {        
+		document.getElementById('rpass_error').innerHTML = "re-enter passwrd cannot be null";       
+		}        
+		else if (rpass != _pass) {        
+			document.getElementById('rpass_error').innerHTML = "Password is different";       
+			}      
+		else {        
+			document.getElementById('rpass_error').innerHTML = ""
+ 		}         
+	}         
+
+			                //---------------------------------------------------------------------------     
+function regist(){       
+	      
+	var pass_error=document.getElementById('pass_error').innerHTML;    var rpass_error=document.getElementById('rpass_error').innerHTML;    var email_error=document.getElementById('email_error').innerHTML;  
+	     
+	var pass=document.getElementById('pass').value;      
+	var rpass=document.getElementById('rpass').value;      
+	var email=document.getElementById('email').value;   
+	 if (( pass_error == "" && rpass_error == "" && email_error == "")&&( pass != "" && rpass != "" && email != "")) {       
+	 alert ("Congratulation,you have successfully registed!");       
+	 } 
+	 else {         
+	 	alert ("Sorry but registration has failed. Please check the information you have entered.");               
+	}                 
+	}*/ 
+</script>  
+</head>
+<body>
+
+
+<h1>User Register</h1>
+
+<div class="container">
+
+	<label id="icon" for="name"><i class="icon-envelope "><b>Email</b><span class = "front_input"></span></i></label>
+    <!--input id="txtEmail" type="text" placeholder="Email" class = "_input" onblur="check_username()"/><span id = "Email_error" class = "after_input"-->
+    <input id="txtEmail" type="text" placeholder="Email"><br>
+    
+    <label id="icon" for="name"><i class="icon-envelope "><b>Password</b><span class = "front_input"></span></i></label>
+    <!--input id="txtPassword" type="password" placeholder="Password" class="_input" onblur = "check_pass()"/><span id = "pass_error" class = "after_input"></span-->
+    <input id="txtPassword" type="password" placeholder="Password"><br>
+    
+    <!--label id="icon" for="name"><i class="icon-envelope "><b>Re-enter</b><span class = "front_input"></span></i></label>
+    <input name = "rpass" type = "password" class = "_input" onblur = "check_rpass()"/><span id = "rpass_error" class = "after_input"></span>
+    <input id="txtRePassword" type="password" placeholder="Re-enter Password"><br>
+    <label id="icon1" for="name"><i class="icon-envelope "><b>Interested Fields</b><span class = "front_input"></span></i></label><br />
+    <span class = "front_input">Campus Event</span><input type="checkbox" name="field"><br />
+    <span class = "front_input">Construction</span><input type="checkbox" name="field"><br />
+    <span class = "front_input">Safty</span><input type="checkbox" name="field"--><br />
+    
+  
+<!--div style = "clear:both;margin-left:330px;margin-top:50px;"-->
+<button id="btnLogin" class="btn btn-action">
+   Log in
+  </button>
+
+<button id="btnSignUp" class="btn btn-secondary" >
+	 Sign up
+	</button>
+  <button id="btnLogout" class="btn btn-action hide">
+   Log out
+  </button>
+</div>
+
 </body>
 </html>
