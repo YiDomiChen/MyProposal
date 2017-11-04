@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+    <title>MyProposal.com</title>
+    <style type="text/css">
+        @media (min-width: 768px) {
+            .container {
+              width: 750px;
+            }
+          }
+        @media (min-width: 992px) {
+            .container {
+              width: 970px;
+            }
+        }
+        @media (min-width: 1200px) {
+            .container {
+              width: 1170px;
+            }
+        }
+
+        label {
+            vertical-align: middle;
+        }
+
+        .btn {
+            margin-left: 10px;
+        }
+        .form-check-label {
+            margin-left: 10px;
+        }
+        </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" style="height: 70px; background-color: #FAFAFB">
+            <div class="col-md-5" style="padding: 15px 15px 15px 50px">
+              <h2><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
+            </div>
+            <div class="col-md-7" style="padding: 10px">          
+              <button class="btn btn-action" type="button" style="float: right">Sign Up</button>
+              <button class="btn btn-primary" type="button" style="float: right">Log In</button>
+              <input type="password" name="password" placeholder="Password" style="float: right" />
+              <input type="text" name="email" placeholder="Email" style="float: right" />
+            </div>
+        </div>
+        <div class="row-fluid">
+            <form>
+                <div class="form-group">
+                    <label class="col-form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" placeholder="What's your proposal? Be specific"/>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Select the category</label>
+                    <div class="col-md-8 form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="category" id="cate_campus_event" value="campus_event" checked>
+                            Campus Event
+                        </label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="category" id="cate_construction" value="construction" checked>
+                            Construction
+                        </label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="category" id="cate_safety" value="safety" checked>
+                            Safety
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="proposal col-form-label">Content</label>
+                    <textarea class="form-control" id="proposal" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Tags</label>
+                    <button type="button" data-toggle="button" aria-pressed="false" autocomplete="off" class="btn btn-outline-primary">Football</button>
+                    <button type="button" data-toggle="button" aria-pressed="false"  class="btn btn-outline-secondary">Career Fair</button>
+                    <button type="button" data-toggle="button" aria-pressed="false"  class="btn btn-outline-success">Showcase</button>
+                    <button type="button" data-toggle="button" aria-pressed="false"  class="btn btn-outline-danger">Concert</button>
+                    <button type="button" data-toggle="button" aria-pressed="false"  class="btn btn-outline-warning">Other</button>
+                    <button type="button" data-toggle="button" aria-pressed="false"  class="btn btn-outline-info">Repair</button>
+                    <button type="button" data-toggle="button" aria-pressed="false"  class="btn btn-outline-dark">Services</button>
+                    <button type="button" data-toggle="button" aria-pressed="false"  class="btn btn-link">More</button>
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-light">cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
