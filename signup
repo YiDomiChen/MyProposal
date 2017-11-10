@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
@@ -489,7 +489,7 @@ function regist(){
     //sign in
     const promise= auth.createUserWithEmailAndPassword(email,pass);
     var uid = Math.random().toString(36).substr(2);
-    firebase.database().ref("User/" + uid).set({
+    firebase.database().ref("proposal/" + uid).set({
       email: email,
       password: pass
     });

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <!--Javascript File-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script>jQuery.noConflict();</script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/p5.js"></script>
+  <script type="text/javascript" src="js/p5.dom.js"></script>
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+  <title>MyProposal.com</title>
+  <style type="text/css">
+  @media (min-width: 768px) {
+    .container {
+      width: 750px;
+    }
+  }
+  @media (min-width: 992px) {
+    .container {
+      width: 970px;
+    }
+  }
+  @media (min-width: 1200px) {
+    .container {
+      width: 1170px;
+    }
+  }
+
+  h1, h2, h3, .masthead p, .subhead p, .marketing h2, .lead {font-family: "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei UI","Microsoft YaHei",SimHei,"宋体",simsun,sans-serif;font-weight: normal;}
+  .leftdiv{
+    background-color: #BBD8E9;
+    width: 20%; 
+    float: left;
+    height: 300px;
+    border-radius: 3px 3px 3px 3px;
+  }
+  .rightdiv{
+    margin-left: 2.5%;
+    width: 77.5%;
+    float: left;
+    background-color: #DCEAF4;
+    height: 300px;
+    border-radius: 3px 3px 3px 3px;
+  }
+
+  input {
+    margin-left: 10px;
+  }
+
+  .btn {
+    margin-left: 10px;
+  }
+  .btn:hover {
+    cursor: pointer;
+  }
+
+  #proposal_category {
+    height: 60px;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+
+  li {
+    padding-left: 10px
+  }
+
+  .card {
+    margin: 10px 20px;
+    padding: 5px;
+    height: 80px;
+    width: 70%;
+  }
+  .card-block {
+    padding: 5px;
+    width: 100%;
+  }
+  .news
+  {
+    position:fixed; 
+    bottom:25px; 
+    right:10px; 
+    width:25%; 
+    height:500px; 
+    background:#DCDCDC;
+
+  }
+  .news_block
+  {
+    border: solid 1px #cbc9c9;
+    border-radius: 4px 4px 4px 4px;
+    
+    
+  }
+  .title
+  {
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: 100%;
+    margin: 10px;
+    
+  }
+  .date
+  {
+    font-size: 70%;
+    text-align: right;
+  }
+  h5
+  {
+    text-align:center;
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 250%;
+  }
+
+  </style>
+  <script type="text/javascript">
+    
+  </script>
+</head>
+<body>  
+    <div class="container-fluid">
+      <div class="row" style="height: 70px; background-color: #FAFAFB">
+        <div class="col-md-5" style="padding: 15px 15px 15px 50px">
+          <h2><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
+        </div>
+        <div class="col-md-7" style="padding: 10px">          
+          <button class="btn btn-action" type="button" style="float: right">Sign Up</button>
+          <button class="btn btn-primary" type="button" style="float: right">Log In</button>
+          <input type="password" name="password" placeholder="Password" style="float: right" />
+          <input type="text" name="email" placeholder="Email" style="float: right" />
+        </div>
+      </div>
+      <div class="row" >
+        <div id="proposal_category">
+          <ul class="nav nav-pills">
+            <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#">All</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Campus Life</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Public Security</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Entertainment</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Research</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Construction</a></li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        <ol id = "proposalList"></ol>
+      </p>
+
+     <div class="row-fluid">
+        <div class="card">
+          <div class="row" style="padding: 20px">
+            <div class="col-md-4" >
+              <h6>0 Ratings</h6>
+            </div>
+            <div class="col-md-8">
+              <div class="card-block" id="test1">
+                <h4>Course Registration</h4> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="card">
+          <div class="row" style="padding: 20px">
+            <div class="col-md-4" >
+              <h6>0 Ratings</h6>
+            </div>
+            <div class="col-md-8">
+              <div class="card-block" id="proposalList">
+                <h4>Proposal 2....dasdasdhuhdasdkasdaksdjklasjdkajdlaslda</h4> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="card">
+          <div class="row" style="padding: 20px">
+            <div class="col-md-4" >
+              <h6>0 Ratings</h6>
+            </div>
+            <div class="col-md-8">
+              <div class="card-block" id="test1">
+                <h4>Jogging Safety</h4> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="card">
+          <div class="card-block"> 
+            <h4>Proposal 4....</h4> </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="card">
+          <div class="card-block"> 
+            <h4>Proposal 5....</h4> </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="card">
+          <div class="card-block"> 
+            <h4>Proposal 6....</h4> </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="card">
+          <div class="card-block"> 
+            <h4>Proposal 7....</h4> </div>
+        </div>
+      </div>
+    </div>
+    <div class="news">
+      
+        <h5>News</h5><br>
+     
+      <div class="news_block">
+      <div class="title">A conversation with David Simon</div>
+      <div class="date">Oct 25, 12pm<br></div>
+      <div class="title">Storygathering for Black History Month</div>
+      <div class="date">Oct 25, 5:30pm<br></div>
+      <div class="title">Mississippi Theacher Corps Recruitment Visit</div>
+      <div class="date">Oct 26, 12pm<br></div>
+      <div class="title">Apollo Men's Chorus & Oriana Women's Choir</div>
+      <div class="date">Oct 27, 8pm<br></div>
+      <div class="title">When We Imprisoned Our Own: Lessons for Today</div>
+      <div class="date">Nov 2, 5pm<br></div>
+    </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCCMcd6IQe1VjhjElv-ExFqOYAdD14S4v0",
+        authDomain: "myproposal-be581.firebaseapp.com",
+        databaseURL: "https://myproposal-be581.firebaseio.com",
+        projectId: "myproposal-be581",
+        storageBucket: "myproposal-be581.appspot.com",
+        messagingSenderId: "128814836934"
+      };
+      firebase.initializeApp(config);
+      database = firebase.database();
+
+      var ref = database.ref('proposal');
+      ref.on('value', gotData, errData);
+      function gotData(data){
+        //console.log(data.val());
+        var proposal = data.val();
+        var keys = Object.keys(proposal);
+        for (var i=0; i < keys.length; i++){
+          var k = keys[i];
+          var field = proposal[k].field;
+          var pname = proposal[k].pname;
+          //var text = proposal[k].text;
+          //console.log(field, pname);
+          var li = document.createElement('li', field + ': ' + pname);
+          li.parent('proposalList');
+        }
+      }
+      function errData(err){
+        console.log('Error!');
+        console.log(err);
+      }
+
+      
+      /*var proposal_info = firebase.database().ref("proposal/10001");
+      var proposal_title = proposal_info.child("pname");
+      var res = proposal_dom.getElementsByTagName("h4");
+      proposal_title.on("value", function(snap) {
+        console.log(snap.val());
+        res[0].innerHTML = snap.val();
+      }) */
+
+      
+      
+
+
+
+      // proposal_info.on("value", function(snapshot) {
+      //   snapshot.forEach(function(child) {
+      //     console.log((child.key + ", " + child.val()));
+      //   });
+      // });
+
+    </script>
+</body>
+</html>
+
