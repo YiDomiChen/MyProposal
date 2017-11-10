@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <!--Javascript File-->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+  <script type="text/javascript" src="js/jquery.js"></script>
   <script>jQuery.noConflict();</script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
   <script type="text/javascript" src="js/p5.js"></script>
@@ -248,15 +249,22 @@
       function gotData(data){
         //console.log(data.val());
         var proposal = data.val();
-        var keys = Object.keys(proposal);
-        for (var i=0; i < keys.length; i++){
-          var k = keys[i];
+        var keys1 = Object.keys(proposal);
+
+        for (var i=0; i < keys1.length; i++){
+          var k = keys1[i];
+          // alert(proposal);
+          alert(k);
           var field = proposal[k].field;
           var pname = proposal[k].pname;
-          //var text = proposal[k].text;
-          //console.log(field, pname);
-          var li = document.createElement('li', field + ': ' + pname);
-          li.parent('proposalList');
+          // var text = proposal[k].text;
+          console.log(field, pname);
+          // var li = document.createElement('li', field + ': ' + pname);
+          var li = document.createElement('li');
+          var title = document.createTextNode(field + ':' + pname);
+          li.appendChild(title);
+          jQuery('#proposalList').append(li);
+          // jQuery(li).parent('proposalList');
         }
       }
       function errData(err){
