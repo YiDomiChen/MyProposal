@@ -63,10 +63,59 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            
             <!-- <div class="col-md-3" style="height: 100%; background-color: blue">
                 Related News
             </div> -->
+            <form>
+                <div class="form-group">
+                    <div class="card proposal_content">
+                    <div class="card-header">Comment</div> 
+                    <textarea class="form-control" id="postComment" rows="10" ></textarea>
+                </div>
+                <!--div class="form-group text-right"-->
+                    <button type="submit" class="btn btn-primary" id="postSmtBtn">Submit</button>
+                    <!--button type="reset" class="btn btn-light">cancel</button>
+                </div-->
+            </form>
         </div>
     </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCCMcd6IQe1VjhjElv-ExFqOYAdD14S4v0",
+        authDomain: "myproposal-be581.firebaseapp.com",
+        databaseURL: "https://myproposal-be581.firebaseio.com",
+        projectId: "myproposal-be581",
+        storageBucket: "myproposal-be581.appspot.com",
+        messagingSenderId: "128814836934"
+      };
+      firebase.initializeApp(config);
+      var database = firebase.database();
+    
+      var postComment = document.getElementById("postComment");
+      
+      var postSmtBtn = document.getElementById("postSmtBtn");
+
+      function dd(){
+      postSmtBtn.addEventListener("click", function(){
+        var postRef = database.ref('/comment/');
+        postRef.push().set({
+            //field: postCate.value,
+            comment: postComment.value,
+            
+        }).then(function(){
+            console.log("post success");
+        }).catch(function(err){
+            console.error("post error", err);
+        })
+      })
+    } 
+    window.onload=function(){dd();}
+        
+      
+      </script>
 </body>
