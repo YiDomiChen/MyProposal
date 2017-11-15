@@ -130,63 +130,63 @@
         <div id="proposal_category">
           <ul class="nav nav-pills">
             <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#">All</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Campus Life</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Public Security</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Entertainment</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Research</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Construction</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" value="1001">Campus Life</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" value="2001">Public Security</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" value="3001">Entertainment</a></li>
           </ul>
         </div>
       </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block" id="test2"> 
-            <h4>Proposal 1....</h4> 
-          </div>
-        </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="row" style="padding: 20px">
-            <div class="col-md-4" >
-              <h6>0 Ratings</h6>
-            </div>
-            <div class="col-md-8">
-              <div class="card-block" id="test">
-                <h4>Proposal 2....dasdasdhuhdasdkasdaksdjklasjdkajdlaslda</h4> </div>
+      <div id="proposal_list">
+        <!-- <div class="row-fluid">
+          <div class="card">
+            <div class="card-block" id="test2"> 
+              <h4>Proposal 1....</h4> 
             </div>
           </div>
         </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block"> 
-            <h4>Proposal 3....</h4> </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="row" style="padding: 20px">
+              <div class="col-md-4" >
+                <h6>0 Ratings</h6>
+              </div>
+              <div class="col-md-8">
+                <div class="card-block" id="test">
+                  <h4>Proposal 2....dasdasdhuhdasdkasdaksdjklasjdkajdlaslda</h4> </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block"> 
-            <h4>Proposal 4....</h4> </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="card-block"> 
+              <h4>Proposal 3....</h4> </div>
+          </div>
         </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block"> 
-            <h4>Proposal 5....</h4> </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="card-block"> 
+              <h4>Proposal 4....</h4> </div>
+          </div>
         </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block"> 
-            <h4>Proposal 6....</h4> </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="card-block"> 
+              <h4>Proposal 5....</h4> </div>
+          </div>
         </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block"> 
-            <h4>Proposal 7....</h4> </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="card-block"> 
+              <h4>Proposal 6....</h4> </div>
+          </div>
         </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="card-block"> 
+              <h4>Proposal 7....</h4> </div>
+          </div>
+        </div> -->
       </div>
     </div>
     <div class="news">
@@ -219,16 +219,49 @@
       };
       firebase.initializeApp(config);
 
-      var proposal_dom = document.getElementById("test");
-      var proposal_info = firebase.database().ref("proposal/10001");
-      var proposal_title = proposal_info.child("pname");
-      var res = proposal_dom.getElementsByTagName("h4");
-      proposal_title.on("value", function(snap) {
-        console.log(snap.val());
-        res[0].innerHTML = snap.val();
-      }) 
+      // var proposal_dom = document.getElementById("test");
+      // var proposal_info = firebase.database().ref("proposal/10001");
+      // var proposal_title = proposal_info.child("pname");
+      // var res = proposal_dom.getElementsByTagName("h4");
+      // proposal_title.on("value", function(snap) {
+      //   console.log(snap.val());
+      //   res[0].innerHTML = snap.val();
+      // }) 
 
 
+      window.onload = function() {
+        loadProposals("All");
+        initEvents();
+      }
+
+      function initEvents() {
+        $("#proposal_category li a").on("click", function(e) {
+          $('#proposal_category li a.active').removeClass('active');
+          var $this = $(this);
+          alert($this.val());
+          if (!$this.hasClass('active')) {
+            $this.addClass('active');
+          }
+          e.preventDefault();
+        });
+      }
+
+      function loadProposals(category) {
+        var ref = firebase.database().ref("proposal");
+        ref.on("value", function(snapshot) {
+          snapshot.forEach(function(child){
+            if (child.val()["pname"]) {
+              var title = $('<div class="row-fluid">' + 
+                '<div class="card">' + 
+                '<div class="card-block">' + 
+                '<h4>' + child.val()["pname"] + '</h4> </div>' + 
+                '</div>' + 
+                '</div>');
+              title.appendTo("#proposal_list");
+            }
+          });
+        });
+      }
       // proposal_info.on("value", function(snapshot) {
       //   snapshot.forEach(function(child) {
       //     console.log((child.key + ", " + child.val()));
