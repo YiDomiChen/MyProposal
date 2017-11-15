@@ -28,12 +28,10 @@
                 </div>
                 <div class=""> -->
                 <div class="card proposal_content">
-                    <div class="card-header">My Proposal</div>                
+                    <div class="card-header" id="test">My Proposal</div>                
                     <div class="card-body text-black">
                     <!-- <h4 class="card-title">Primary card title</h4> -->
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisi lacus sed viverra tellus in hac habitasse platea. Sed blandit libero volutpat sed cras ornare. Urna nunc id cursus metus aliquam eleifend mi in nulla. In ornare quam viverra orci sagittis eu. Laoreet id donec ultrices tincidunt arcu. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. In est ante in nibh mauris cursus mattis molestie a. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque. Tincidunt dui ut ornare lectus sit. At erat pellentesque adipiscing commodo elit at imperdiet. Risus nec feugiat in fermentum posuere. Vitae proin sagittis nisl rhoncus mattis rhoncus. Quis varius quam quisque id diam vel quam elementum. Quam viverra orci sagittis eu volutpat odio. Euismod elementum nisi quis eleifend.</p>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisi lacus sed viverra tellus in hac habitasse platea. Sed blandit libero volutpat sed cras ornare. Urna nunc id cursus metus aliquam eleifend mi in nulla. In ornare quam viverra orci sagittis eu. Laoreet id donec ultrices tincidunt arcu. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. In est ante in nibh mauris cursus mattis molestie a. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque. Tincidunt dui ut ornare lectus sit. At erat pellentesque adipiscing commodo elit at imperdiet. Risus nec feugiat in fermentum posuere. Vitae proin sagittis nisl rhoncus mattis rhoncus. Quis varius quam quisque id diam vel quam elementum. Quam viverra orci sagittis eu volutpat odio. Euismod elementum nisi quis eleifend.</p>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisi lacus sed viverra tellus in hac habitasse platea. Sed blandit libero volutpat sed cras ornare. Urna nunc id cursus metus aliquam eleifend mi in nulla. In ornare quam viverra orci sagittis eu. Laoreet id donec ultrices tincidunt arcu. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. In est ante in nibh mauris cursus mattis molestie a. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque. Tincidunt dui ut ornare lectus sit. At erat pellentesque adipiscing commodo elit at imperdiet. Risus nec feugiat in fermentum posuere. Vitae proin sagittis nisl rhoncus mattis rhoncus. Quis varius quam quisque id diam vel quam elementum. Quam viverra orci sagittis eu volutpat odio. Euismod elementum nisi quis eleifend.</p>
+                        <p class="card-text" id="test1"> </p>
                         <p class="card-text text-sm-right"><small class="text-muted ">Last updated 3 mins ago</small></p>
                     </div>
                     <div class="card-footer">
@@ -42,7 +40,7 @@
                 </div>
                 <div class="card comment_content">
                     <div class="card">
-                        <div class="card-body text-black">
+                        <div class="card-body text-black" >
                         <!-- <h4 class="card-title">Primary card title</h4> -->
                             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas egestas fringilla phasellus faucibus scelerisque. Vitae purus faucibus ornare suspendisse sed nisi lacus sed. Pretium vulputate sapien nec sagittis aliquam malesuada. Vitae et leo duis ut diam quam nulla porttitor.</p>
                             <p class="card-text text-sm-right"><small class="text-muted ">Last updated 2 days ago</small></p>
@@ -63,6 +61,11 @@
                         </div>
                     </div>
                 </div>
+                
+                 <div id="proposal_list">
+
+                    </div>
+
             
             <!-- <div class="col-md-3" style="height: 100%; background-color: blue">
                 Related News
@@ -99,7 +102,23 @@
       var postComment = document.getElementById("postComment");
       
       var postSmtBtn = document.getElementById("postSmtBtn");
-
+      
+      const rootRef = firebase.database().ref()
+      var dom = document.getElementById("test");
+      var query = rootRef.child('proposal/10001/pname');
+      query.on("value", function(snap) {
+        console.log(snap.val());
+        dom.innerHTML = snap.val();
+      })
+      
+      var dom1 = document.getElementById("test1");
+      var query1 = rootRef.child('proposal/10001/text');
+      query1.on("value", function(snap) {
+        console.log(snap.val());
+        dom1.innerHTML = snap.val();
+      })
+      
+      
       function dd(){
       postSmtBtn.addEventListener("click", function(){
         var postRef = database.ref('/comment/');
@@ -115,6 +134,38 @@
       })
     } 
     window.onload=function(){dd();}
+    
+    window.onload = function() {
+        loadProposals("All");
+        initEvents();
+      }
+      function initEvents() {
+        $("#proposal_category li a").on("click", function(e) {
+          $('#proposal_category li a.active').removeClass('active');
+          var $this = $(this);
+          alert($this.val());
+          if (!$this.hasClass('active')) {
+            $this.addClass('active');
+          }
+          e.preventDefault();
+        });
+      }
+      function loadProposals(category) {
+        var ref = firebase.database().ref("ProposalComment/10001");
+        ref.on("value", function(snapshot) {
+          snapshot.forEach(function(child){
+            if (child.val()) {
+              var title = $('<div class="row-fluid">' + 
+                '<div class="card">' + 
+                '<div class="card-block">' + 
+                '<h4>' + child.val() + '</h4> </div>' + 
+                '</div>' + 
+                '</div>');
+              title.appendTo("#proposal_list");
+            }
+          });
+        });
+      }
         
       
       </script>
