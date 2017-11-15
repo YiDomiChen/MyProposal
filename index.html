@@ -129,7 +129,7 @@
       <div class="row" >
         <div id="proposal_category">
           <ul class="nav nav-pills">
-            <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#">All</a></li>
+            <li class="nav-item active"><a class="nav-link active" data-toggle="tab" value="All" href="#">All</a></li>
             <li class="nav-item"><a class="nav-link" href="#" value="1001">Campus Life</a></li>
             <li class="nav-item"><a class="nav-link" href="#" value="2001">Public Security</a></li>
             <li class="nav-item"><a class="nav-link" href="#" value="3001">Entertainment</a></li>
@@ -238,17 +238,23 @@
         $("#proposal_category li a").on("click", function(e) {
           $('#proposal_category li a.active').removeClass('active');
           var $this = $(this);
-          alert($this.val());
           if (!$this.hasClass('active')) {
             $this.addClass('active');
           }
           e.preventDefault();
+          loadProposals($this.attr("value"));
         });
       }
 
       function loadProposals(category) {
-        var ref = firebase.database().ref("proposal");
+        var ref;
+        if (category == "All"){
+          ref = firebase.database().ref("proposal");
+        } else {
+          ref = firebase.database().ref("proposal").orderByChild("field").equalTo(category);
+        }
         ref.on("value", function(snapshot) {
+          $("#proposal_list").empty();
           snapshot.forEach(function(child){
             if (child.val()["pname"]) {
               var title = $('<div class="row-fluid">' + 
