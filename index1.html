@@ -137,6 +137,7 @@
           </ul>
         </div>
       </div>
+<<<<<<< HEAD
       <div class="row-fluid">
         <div class="card">
           <div class="card-block"> 
@@ -152,44 +153,87 @@
             <div class="col-md-8">
               <div class="card-block">
                 <div class="col-md-6"><h4>Proposal 2....</h4> </div>
+=======
+      <p>
+        <ol id = "proposalList"></ol>
+      </p>
+      <div id="proposal_list">
+      <div class="row-fluid">
+          <div class="card">
+            <div class="row" style="padding: 20px">
+              <div class="col-md-4" >
+                <h6>0 Ratings</h6>
+              </div>
+              <div class="col-md-8">
+                <div class="card-block" id="test1">
+                  <h4>Course Registration</h4> </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="row" style="padding: 20px">
+              <div class="col-md-4" >
+                <h6>0 Ratings</h6>
+              </div>
+              <div class="col-md-8">
+                <div class="card-block" id="proposalList">
+                  <h4>Proposal 2....dasdasdhuhdasdkasdaksdjklasjdkajdlaslda</h4> </div>
+>>>>>>> origin/master
+              </div>
+            </div>
+          </div>
+        </div>
+<<<<<<< HEAD
       </div>
       <div class="row-fluid">
         <div class="card">
           <div class="card-block"> 
             <h4>Proposal 3....</h4> </div>
+=======
+        <div class="row-fluid">
+          <div class="card">
+            <div class="row" style="padding: 20px">
+              <div class="col-md-4" >
+                <h6>0 Ratings</h6>
+              </div>
+              <div class="col-md-8">
+                <div class="card-block" id="test1">
+                  <h4>Jogging Safety</h4> </div>
+              </div>
+            </div>
+          </div>
+>>>>>>> origin/master
         </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block"> 
-            <h4>Proposal 4....</h4> </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="card-block"> 
+              <h4>Proposal 4....</h4> </div>
+          </div>
         </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block"> 
-            <h4>Proposal 5....</h4> </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="card-block"> 
+              <h4>Proposal 5....</h4> </div>
+          </div>
         </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block"> 
-            <h4>Proposal 6....</h4> </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="card-block"> 
+              <h4>Proposal 6....</h4> </div>
+          </div>
         </div>
-      </div>
-      <div class="row-fluid">
-        <div class="card">
-          <div class="card-block"> 
-            <h4>Proposal 7....</h4> </div>
+        <div class="row-fluid">
+          <div class="card">
+            <div class="card-block"> 
+              <h4>Proposal 7....</h4> </div>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="news">
-      
         <h5>News</h5><br>
      
       <div class="news_block">
@@ -206,6 +250,75 @@
     </div>
     </div>
     </div>
+<<<<<<< HEAD
+=======
+    <script type="text/javascript">
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCCMcd6IQe1VjhjElv-ExFqOYAdD14S4v0",
+        authDomain: "myproposal-be581.firebaseapp.com",
+        databaseURL: "https://myproposal-be581.firebaseio.com",
+        projectId: "myproposal-be581",
+        storageBucket: "myproposal-be581.appspot.com",
+        messagingSenderId: "128814836934"
+      };
+      firebase.initializeApp(config);
+      database = firebase.database();
+
+      var ref = database.ref('proposal');
+      ref.on('value', gotData, errData);
+      function gotData(data){
+        //console.log(data.val());
+        var proposal = data.val();
+        var keys1 = Object.keys(proposal);
+
+        for (var i=0; i < keys1.length; i++){
+          var k = keys1[i];
+          // alert(proposal);
+          alert(k);
+          var field = proposal[k].field;
+          var pname = proposal[k].pname;
+          // var text = proposal[k].text;
+          console.log(field, pname);
+          // var li = document.createElement('li', field + ': ' + pname);
+          var li = document.createElement('li');
+          var title = document.createTextNode(field + ':' + pname);
+          li.appendChild(title);
+          jQuery('#proposalList').append(li);
+          // jQuery(li).parent('proposalList');
+        }
+      }
+      function errData(err){
+        console.log('Error!');
+        console.log(err);
+      }
+
+
+      
+
+
+      
+      /*var proposal_info = firebase.database().ref("proposal/10001");
+      var proposal_title = proposal_info.child("pname");
+      var res = proposal_dom.getElementsByTagName("h4");
+      proposal_title.on("value", function(snap) {
+        console.log(snap.val());
+        res[0].innerHTML = snap.val();
+      }) */
+
+      
+      
+
+
+
+      // proposal_info.on("value", function(snapshot) {
+      //   snapshot.forEach(function(child) {
+      //     console.log((child.key + ", " + child.val()));
+      //   });
+      // });
+
+    </script>
+>>>>>>> origin/master
 </body>
 </html>
 
