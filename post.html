@@ -110,17 +110,18 @@
       };
       firebase.initializeApp(config);
       var database = firebase.database();
+    
 
       var postTitle = document.getElementById("postTitle");
       var postContent = document.getElementById("postContent");
-      var postCate = document.getElementById("cate");
+      //var postCate = document.getElementsByClassName("form-check-input");
       var postSmtBtn = document.getElementById("postSmtBtn");
 
       function dd(){
       postSmtBtn.addEventListener("click", function(){
-        var postRef = database.ref('/userProposal/');
+        var postRef = database.ref('/proposal/');
         postRef.push().set({
-            field: postCate.value,
+            //field: postCate.value,
             pname: postTitle.value,
             text: postContent.value,
         }).then(function(){
