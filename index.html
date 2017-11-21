@@ -184,6 +184,40 @@
       // }) 
 
 
+      var user;
+      firebase.auth().onAuthStateChanged(firebaseUser =>{
+
+    if (firebaseUser){
+      console.log(firebaseUser);
+      btnLogout.classList.remove('hide');
+      btnLogin.classList.add('hide');
+      
+      user = firebase.auth().currentUser;
+
+
+      user.sendEmailVerification().then(function() {
+      // Email sent.
+      }).catch(function(error) {
+      // An error happened.
+      });
+      
+      
+    }else {
+      console.log('not logged in');
+      btnLogout.classList.add('hide');
+      btnLogin.classList.remove('hide');
+    }
+  });
+      //user = firebase.auth().currentUser;
+      firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        console.log(user.email);
+      } else {
+        // No user is signed in.
+        console.log("Error");
+      }
+    });
       window.onload = function() {
         checkUser();
         loadProposals("All");
