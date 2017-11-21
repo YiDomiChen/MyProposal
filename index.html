@@ -253,6 +253,7 @@
         } else {
           ref = firebase.database().ref("proposal").orderByChild("field").equalTo(category);
         }
+
         ref.on("value", function(snapshot) {
           $("#proposal_list").empty();
           snapshot.forEach(function(child){
@@ -260,7 +261,7 @@
               var title = $('<div class="row-fluid">' + 
                 '<div class="card">' + 
                 '<div class="card-block">' + 
-                '<h4>' + child.val()["pname"] + '</h4> </div>' + 
+                '<h4><a href="proposal.html?id=' + child.key + '">' + child.val()["pname"] + '</a></h4> </div>' + 
                 '</div>' + 
                 '</div>');
               title.appendTo("#proposal_list");

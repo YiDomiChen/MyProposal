@@ -114,7 +114,6 @@
 
       var postTitle = document.getElementById("postTitle");
       var postContent = document.getElementById("postContent");
-<<<<<<< HEAD
       //var postCate = document.getElementsByClassName("form-check-input");
       var postSmtBtn = document.getElementById("postSmtBtn");
 
@@ -129,32 +128,9 @@
             console.log("post success");
         }).catch(function(err){
             console.error("post error", err);
-=======
-      var postCate = document.getElementById("cate");
-      
-      
-      var postSmtBtn = document.getElementById("postSmtBtn");
-
-      function dd(){
-        postSmtBtn.addEventListener("click", function(){
-            var postTitle = $("#postTitle").val();
-            var postCate = $("#propCate input:radio:checked").val();
-            var postContent = $("#postContent").val();
-            var postRef = database.ref('/proposal/');
-
-            postRef.push().set({
-                field: postCate,
-                pname: postTitle,
-                text: postContent
-            }).then(function(){
-                console.log("post success");
-            }).catch(function(err){
-                console.error("post error", err);
-            });
->>>>>>> origin/master
         })
-    } 
-    window.onload=function(){dd();}
+    }
+    window.onload = function(){dd();}
         
       
       </script>

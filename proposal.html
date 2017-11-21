@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+    <title>MyProposal.com</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" style="height: 70px; background-color: #FAFAFB">
+            <div class="col-md-5" style="padding: 15px 15px 15px 50px">
+              <h2><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
+            </div>
+            <div class="col-md-7" style="padding: 10px">          
+              <button class="btn btn-action" type="button" style="float: right">Sign Up</button>
+              <button class="btn btn-primary" type="button" style="float: right">Log In</button>
+              <input type="password" name="password" placeholder="Password" style="float: right" />
+              <input type="text" name="email" placeholder="Email" style="float: right" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9" style="height: 100%">
+                <!-- <div class="card-body text-white bg-primary mb-3">
+                    <h1>Test Proposal Page</h1>
+                </div>
+                <div class=""> -->
+                <div class="card proposal_content">
+                    <div class="card-header" id="test">My Proposal</div>                
+                    <div class="card-body text-black">
+                    <!-- <h4 class="card-title">Primary card title</h4> -->
+                        <p class="card-text" id="test1"> </p>
+                        <p class="card-text text-sm-right"><small class="text-muted ">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Post Oct. 24, 2017</small>
+                    </div>
+                </div>
+                
+				
+				 <div id="proposal_list">
+
+					</div>
+
+            
+            <!-- <div class="col-md-3" style="height: 100%; background-color: blue">
+                Related News
+            </div> -->
+            <form>
+                <div class="form-group">
+                    <div class="card proposal_content">
+                    <div class="card-header">Comment</div> 
+                    <textarea class="form-control" id="postComment" rows="10" ></textarea>
+                </div>
+                <!--div class="form-group text-right"-->
+                    <button type="submit" class="btn btn-primary" id="postSmtBtn">Submit</button>
+                    <!--button type="reset" class="btn btn-light">cancel</button>
+                </div-->
+            </form>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCCMcd6IQe1VjhjElv-ExFqOYAdD14S4v0",
+        authDomain: "myproposal-be581.firebaseapp.com",
+        databaseURL: "https://myproposal-be581.firebaseio.com",
+        projectId: "myproposal-be581",
+        storageBucket: "myproposal-be581.appspot.com",
+        messagingSenderId: "128814836934"
+      };
+      id = getUrlParam("id");
+      firebase.initializeApp(config);
+      var database = firebase.database();
+    
+      var postComment = document.getElementById("postComment");
+      
+      var postSmtBtn = document.getElementById("postSmtBtn");
+	  
+	  const rootRef = firebase.database().ref()
+	  var dom = document.getElementById("test");
+      var query = rootRef.child('proposal/' + id + '/pname');
+	  query.on("value", function(snap) {
+        console.log(snap.val());
+        dom.innerHTML = snap.val();
+      })
+	  
+	  var dom1 = document.getElementById("test1");
+      var query1 = rootRef.child('proposal/' + id + '/text');
+	  query1.on("value", function(snap) {
+        console.log(snap.val());
+        dom1.innerHTML = snap.val();
+      })
+	  
+	  
+      function dd(){
+      postSmtBtn.addEventListener("click", function(){
+        var postRef = database.ref('/comment/');
+        postRef.push().set({
+            //field: postCate.value,
+            comment: postComment.value,
+            
+        }).then(function(){
+            console.log("post success");
+        }).catch(function(err){
+            console.error("post error", err);
+        })
+      })
+    } 
+    window.onload=function(){dd();}
+	
+	window.onload = function() {
+        
+        loadProposals(id);
+        initEvents();
+      }
+      function initEvents() {
+        $("#proposal_category li a").on("click", function(e) {
+          $('#proposal_category li a.active').removeClass('active');
+          var $this = $(this);
+          alert($this.val());
+          if (!$this.hasClass('active')) {
+            $this.addClass('active');
+          }
+          e.preventDefault();
+        });
+      }
+        function loadProposals(id) {
+            var ref = firebase.database().ref("ProposalComment/" + id);
+            ref.on("value", function(snapshot) {
+                snapshot.forEach(function(child){
+                if (child.val()) {
+                    var title = $('<div class="card comment_content">' + 
+                    '<div class="card">' + 
+                    '<div class="card-body text-black">' + 
+                    '<p>' + child.child("comment").val() + '</p> </div>' + 
+                    '</div>' + 
+                    '</div>');
+                    title.appendTo("#proposal_list");
+                }
+                });
+            });
+        }
+
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+      </script>
+</body>
