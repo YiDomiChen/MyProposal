@@ -6,14 +6,11 @@
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script>
- 
-  
-  
+  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script>  
   <!--<link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <title>MyProposal.com</title>
-    <style type="text/css">
+  <title>MyProposal.com</title>
+  <style type="text/css">
         
         
 body {
@@ -322,13 +319,11 @@ a.button:hover {
   	<label id="icon" for="name"><i class="icon-envelope "><b>Email</b><span class = "front_input"></span></i></label>
    
 	  <input id="txtEmail" type="text" placeholder="Email"><br><br>
-	  <label id="icon" for="name"><i class="icon-envelope "><b>Password</b><span class = "front_input"></span></i></label>
-	  <input id="txtPassword" type="password" placeholder="Password"><br><br>
-	
+	  <label id="icon" for="name"><i class="icon-envelope"><b>Password</b><span class = "front_input"></span></i></label>
+	  <input id="txtPassword" type="password" placeholder="Password"><br><br>	
 	  <button id="btnLogin" class="btn btn-action">Log in</button>
-
-	  <button id="btnLogout" class="btn btn-action hide">Log out</button>
-
+	  <button id="btnLogout" class="btn btn-action">Log out</button>
+    <button id="btnTest" class="btn btn-action">Test User</button>
     <a href = "signup.html">Not yet register? Register</a><br><br>
   
   <!--div class="container" style = "background-color:#FFF" style="width:90%"></div-->
@@ -352,14 +347,24 @@ a.button:hover {
 	const btnLogin = document.getElementById('btnLogin');
 	const btnSignUp = document.getElementById('btnSignUp');
 	const btnLogout = document.getElementById('btnLogout');
-	
+	const btnTest = document.getElementById('btnTest');
+
+  btnTest.addEventListener('click', e=> {
+    var userTest = firebase.auth().currentUser;
+    alert(userTest);
+  });
+
 	//add login
 	btnLogin.addEventListener('click', e => {	
-  	const email =txtEmail.value;
-  	const pass =txtPassword.value;
-  	const auth=firebase.auth();
+  	const email = txtEmail.value;
+  	const pass = txtPassword.value;
+  	const auth = firebase.auth();
+    // var userTest = firebase.auth().currentUser;
+    // alert(userTest);
   	//sign in
-  	const promise= auth.signInWithEmailAndPassword(email,pass);
+  	const promise = auth.signInWithEmailAndPassword(email,pass);
+    // user = firebase.auth().currentUser;
+    // alert(user);
   	promise.catch(e => console.log(e.message));
 	});
 	
@@ -391,16 +396,16 @@ a.button:hover {
 			btnLogout.classList.remove('hide');
 			
 			user = firebase.auth().currentUser;
-
+      // alert(user);
 
 			user.sendEmailVerification().then(function() {
-			// Email sent.
-			}).catch(function(error) {
-			// An error happened.
+			  // Email sent.
+      }).catch(function(error) {
+			  // An error happened.
 			});
 			
 			
-		}else {
+		} else {
 			console.log('not logged in');
 			btnLogout.classList.add('hide');
 		}
