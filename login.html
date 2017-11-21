@@ -387,6 +387,7 @@ a.button:hover {
 	firebase.auth().onAuthStateChanged(firebaseUser =>{
 
 		if (firebaseUser){
+			window.location = "index.html";
 			console.log(firebaseUser);
 			btnLogout.classList.remove('hide');
 			
