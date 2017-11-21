@@ -323,7 +323,6 @@ a.button:hover {
 	  <input id="txtPassword" type="password" placeholder="Password"><br><br>	
 	  <button id="btnLogin" class="btn btn-action">Log in</button>
 	  <button id="btnLogout" class="btn btn-action">Log out</button>
-    <button id="btnTest" class="btn btn-action">Test User</button>
     <a href = "signup.html">Not yet register? Register</a><br><br>
   
   <!--div class="container" style = "background-color:#FFF" style="width:90%"></div-->
@@ -347,12 +346,6 @@ a.button:hover {
 	const btnLogin = document.getElementById('btnLogin');
 	const btnSignUp = document.getElementById('btnSignUp');
 	const btnLogout = document.getElementById('btnLogout');
-	const btnTest = document.getElementById('btnTest');
-
-  btnTest.addEventListener('click', e=> {
-    var userTest = firebase.auth().currentUser;
-    alert(userTest);
-  });
 
 	//add login
 	btnLogin.addEventListener('click', e => {	
@@ -411,16 +404,6 @@ a.button:hover {
 			btnLogout.classList.add('hide');
 		}
 	});
-
- firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    console.log(user.email);
-  } else {
-    // No user is signed in.
-    console.log("Error");
-  }
-});
 	
 	//const auth = firebase.auth();
 	//auth.signInWithEmailAndPassword(email,pass);

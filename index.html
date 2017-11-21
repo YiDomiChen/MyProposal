@@ -186,38 +186,28 @@
 
       var user;
       firebase.auth().onAuthStateChanged(firebaseUser =>{
-
-    if (firebaseUser){
-      console.log(firebaseUser);
-      btnLogout.classList.remove('hide');
-      btnLogin.classList.add('hide');
+        checkUser();
+    // if (firebaseUser){
+    //   console.log(firebaseUser);
+    //   btnLogout.classList.remove('hide');
+    //   btnLogin.classList.add('hide');
       
-      user = firebase.auth().currentUser;
+    //   user = firebase.auth().currentUser;
 
 
-      user.sendEmailVerification().then(function() {
-      // Email sent.
-      }).catch(function(error) {
-      // An error happened.
+    //   user.sendEmailVerification().then(function() {
+    //   // Email sent.
+    //   }).catch(function(error) {
+    //   // An error happened.
+    //   });
+      
+      
+    // }else {
+    //   console.log('not logged in');
+    //   btnLogout.classList.add('hide');
+    //   btnLogin.classList.remove('hide');
+    // }
       });
-      
-      
-    }else {
-      console.log('not logged in');
-      btnLogout.classList.add('hide');
-      btnLogin.classList.remove('hide');
-    }
-  });
-      //user = firebase.auth().currentUser;
-      firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        console.log(user.email);
-      } else {
-        // No user is signed in.
-        console.log("Error");
-      }
-    });
       window.onload = function() {
         checkUser();
         loadProposals("All");
@@ -228,13 +218,20 @@
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             // User is signed in.
-            $("#user_info").removeClass("invisible");
-            $("#post_proposal").removeClass("invisible");
-            $("#login").addClass("invisible");
-            $("#signup").addClass("invisible");
+            $("#user_info").removeClass("d-none");
+            $("#post_proposal").removeClass("d-none");
+            $("#logout").removeClass("d-none");
+            $("#login").addClass("d-none");
+            $("#signup").addClass("d-none");
             $("#disp_user").html(user.email);
           } else {
             // No user is signed in.
+            $("#user_info").addClass("d-none");
+            $("#post_proposal").addClass("d-none");
+            $("#logout").addClass("d-none");
+            $("#login").removeClass("d-none");
+            $("#signup").removeClass("d-none");
+            // $("#disp_user").html(user.email);
           }
         });
       }
@@ -244,6 +241,10 @@
           window.location.href = "login.html";
         });
 
+        $("#logout").on("click", function(e) {
+          firebase.auth().signOut();
+          checkUser(); 
+        });
 
         $("#proposal_category li a").on("click", function(e) {
           $('#proposal_category li a.active').removeClass('active');
