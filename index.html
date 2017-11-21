@@ -122,6 +122,7 @@
         <div class="col-md-7" style="padding: 10px">          
           <button class="btn btn-action" type="button" style="float: right">Sign Up</button>
           <button class="btn btn-primary" type="button" style="float: right">Log In</button>
+          <button id="btnLogout" class="btn btn-action hide">Log out</button>
           <input type="password" name="password" placeholder="Password" style="float: right" />
           <input type="text" name="email" placeholder="Email" style="float: right" />
         </div>
@@ -229,6 +230,40 @@
       // }) 
 
 
+      var user;
+      firebase.auth().onAuthStateChanged(firebaseUser =>{
+
+    if (firebaseUser){
+      console.log(firebaseUser);
+      btnLogout.classList.remove('hide');
+      btnLogin.classList.add('hide');
+      
+      user = firebase.auth().currentUser;
+
+
+      user.sendEmailVerification().then(function() {
+      // Email sent.
+      }).catch(function(error) {
+      // An error happened.
+      });
+      
+      
+    }else {
+      console.log('not logged in');
+      btnLogout.classList.add('hide');
+      btnLogin.classList.remove('hide');
+    }
+  });
+      //user = firebase.auth().currentUser;
+      firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        console.log(user.email);
+      } else {
+        // No user is signed in.
+        console.log("Error");
+      }
+    });
       window.onload = function() {
         loadProposals("All");
         initEvents();
