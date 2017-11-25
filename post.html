@@ -2,10 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <!--Javascript File-->
+  <!-- <script type="text/javascript" src="js/jquery.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <title>MyProposal.com</title>
     <style type="text/css">
         @media (min-width: 768px) {
@@ -41,13 +44,14 @@
     <div class="container-fluid">
         <div class="row" style="height: 70px; background-color: #FAFAFB">
             <div class="col-md-5" style="padding: 15px 15px 15px 50px">
-              <h2><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
+              <h2 onclick="location.href = 'index.html';"><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
             </div>
             <div class="col-md-7" style="padding: 10px">          
-              <button class="btn btn-action" type="button" style="float: right">Sign Up</button>
-              <button class="btn btn-primary" type="button" style="float: right">Log In</button>
-              <input type="password" name="password" placeholder="Password" style="float: right" />
-              <input type="text" name="email" placeholder="Email" style="float: right" />
+                <button id ="signup" class="btn btn-action" style="float: right">Sign Up</button>
+                <button id ="login" class="btn btn-primary"style="float: right">Log In</button>
+                <label id="user_info">Welcome! <span id="disp_user" style="float: right"></span></label>
+                <button id="post_proposal" class="btn btn-primary" style="float: right">Post</button>
+                <button id="logout" class="btn btn-primary" style="float: right">Log Out</button>
             </div>
         </div>
         
@@ -111,26 +115,88 @@
       firebase.initializeApp(config);
       var database = firebase.database();
     
+      var user;
+      firebase.auth().onAuthStateChanged(firebaseUser =>{
+        checkUser();
+        });
+      window.onload = function() {
+        checkUser();
+        
+        initEvents();
+        dd();
+      }
+      function checkUser() {
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // User is signed in.
+            console.log(user);
+            $("#user_info").removeClass("d-none");
+            $("#post_proposal").removeClass("d-none");
+            $("#logout").removeClass("d-none");
+            $("#login").addClass("d-none");
+            $("#signup").addClass("d-none");
+            $("#disp_user").html(user.email);
+          } else {
+            // No user is signed in.
+            console.log('not logged in');
+            $("#user_info").addClass("d-none");
+            $("#post_proposal").addClass("d-none");
+            $("#logout").addClass("d-none");
+            $("#login").removeClass("d-none");
+            $("#signup").removeClass("d-none");
+            // $("#disp_user").html(user.email);
+          }
+        });
+      }
 
+      function initEvents() {
+        $("#login").on("click", function(e) {
+          window.location.href = "login.html";
+        });
+        $("#signup").on("click", function(e) {
+          window.location.href = "signup.html";
+        });
+        $("#logout").on("click", function(e) {
+          firebase.auth().signOut();
+          checkUser(); 
+        });
+        $("#post_proposal").on("click", function(e){
+          window.location.href = "post.html";
+        });
+        $("#proposal_category li a").on("click", function(e) {
+          $('#proposal_category li a.active').removeClass('active');
+          var $this = $(this);
+          if (!$this.hasClass('active')) {
+            $this.addClass('active');
+          }
+          e.preventDefault();
+          loadProposals($this.attr("value"));
+        });
+      }
       var postTitle = document.getElementById("postTitle");
       var postContent = document.getElementById("postContent");
-      //var postCate = document.getElementsByClassName("form-check-input");
+      //var postCate = document.getElementById("cate");      
       var postSmtBtn = document.getElementById("postSmtBtn");
 
       function dd(){
-      postSmtBtn.addEventListener("click", function(){
-        var postRef = database.ref('/proposal/');
-        postRef.push().set({
-            //field: postCate.value,
-            pname: postTitle.value,
-            text: postContent.value,
-        }).then(function(){
-            console.log("post success");
-        }).catch(function(err){
-            console.error("post error", err);
+        postSmtBtn.addEventListener("click", function(){
+            //var postTitle = $("#postTitle").val();
+            //var postCate = $("#propCate input:radio:checked").val();
+            //var postContent = $("#postContent").val();
+            var postRef = database.ref('/proposal/');
+
+            postRef.push().set({
+                //field: postCate,
+                pname: postTitle.value,
+                text: postContent.value,
+            }).then(function(){
+                console.log("post success");
+                window.location = "index.html";
+            }).catch(function(err){
+                console.error("post error", err);
+            })
         })
-    }
-    window.onload = function(){dd();}
+    } 
         
       
       </script>
