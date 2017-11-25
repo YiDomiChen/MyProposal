@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +31,6 @@
           width: 1170px;
         }
       }
-
       h1, h2, h3, .masthead p, .subhead p, .marketing h2, .lead {font-family: "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei UI","Microsoft YaHei",SimHei,"宋体",simsun,sans-serif;font-weight: normal;}
       .leftdiv{
         background-color: #BBD8E9;
@@ -47,28 +47,23 @@
         height: 300px;
         border-radius: 3px 3px 3px 3px;
       }
-
       input {
         margin-left: 10px;
       }
-
       .btn {
         margin-left: 10px;
       }
       .btn:hover {
         cursor: pointer;
       }
-
       #proposal_category {
         height: 60px;
         margin-left: 20px;
         margin-top: 20px;
       }
-
       li {
         padding-left: 10px
       }
-
       .card {
         margin: 10px 20px;
         padding: 5px;
@@ -87,7 +82,6 @@
         width:25%; 
         height:500px; 
         background:#DCDCDC;
-
       }
       .news_block
       {
@@ -114,7 +108,6 @@
         font-family: Impact, Charcoal, sans-serif;
         font-size: 250%;
       }
-
   </style>
   <script type="text/javascript" src="js/index.js"></script>
 </head>
@@ -122,14 +115,14 @@
     <div class="container-fluid">
       <div class="row" style="height: 70px; background-color: #FAFAFB">
         <div class="col-md-5" style="padding: 15px 15px 15px 50px">
-          <h2><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
+          <h2 onclick="location.href = 'index.html';"><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
         </div>
         <div class="col-md-7" style="padding: 10px">  
-          <button id ="signup" class="btn btn-action">Sign Up</button>
-          <button id ="login" class="btn btn-primary">Log In</button>
-          <label id="user_info">Welcome! <span id="disp_user"></span></label>
-          <button id="post_proposal" class="btn btn-primary">Post</button>
-          <button id="logout" class="btn btn-primary">Log Out</button>
+          <button id ="signup" class="btn btn-action" style="float: right">Sign Up</button>
+          <button id ="login" class="btn btn-primary" style="float: right">Log In</button>
+          <label id="user_info">Welcome! <span id="disp_user" style="float: right"></span></label>
+          <button id="post_proposal" class="btn btn-primary" style="float: right">Post</button>
+          <button id="logout" class="btn btn-primary" style="float: right">Log Out</button>
         </div>
       </div>
       <div class="row" >
@@ -173,7 +166,6 @@
         messagingSenderId: "128814836934"
       };
       firebase.initializeApp(config);
-
       // var proposal_dom = document.getElementById("test");
       // var proposal_info = firebase.database().ref("proposal/10001");
       // var proposal_title = proposal_info.child("pname");
@@ -182,8 +174,6 @@
       //   console.log(snap.val());
       //   res[0].innerHTML = snap.val();
       // }) 
-
-
       var user;
       firebase.auth().onAuthStateChanged(firebaseUser =>{
         checkUser();
@@ -193,8 +183,6 @@
     //   btnLogin.classList.add('hide');
       
     //   user = firebase.auth().currentUser;
-
-
     //   user.sendEmailVerification().then(function() {
     //   // Email sent.
     //   }).catch(function(error) {
@@ -213,11 +201,11 @@
         loadProposals("All");
         initEvents();
       }
-
       function checkUser() {
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             // User is signed in.
+            console.log(user);
             $("#user_info").removeClass("d-none");
             $("#post_proposal").removeClass("d-none");
             $("#logout").removeClass("d-none");
@@ -226,6 +214,7 @@
             $("#disp_user").html(user.email);
           } else {
             // No user is signed in.
+            console.log('not logged in');
             $("#user_info").addClass("d-none");
             $("#post_proposal").addClass("d-none");
             $("#logout").addClass("d-none");
@@ -235,17 +224,20 @@
           }
         });
       }
-
       function initEvents() {
         $("#login").on("click", function(e) {
           window.location.href = "login.html";
         });
-
+        $("#signup").on("click", function(e) {
+          window.location.href = "signup.html";
+        });
         $("#logout").on("click", function(e) {
           firebase.auth().signOut();
           checkUser(); 
         });
-
+        $("#post_proposal").on("click", function(e){
+          window.location.href = "post.html";
+        });
         $("#proposal_category li a").on("click", function(e) {
           $('#proposal_category li a.active').removeClass('active');
           var $this = $(this);
@@ -256,7 +248,6 @@
           loadProposals($this.attr("value"));
         });
       }
-
       function loadProposals(category) {
         var ref;
         if (category == "All"){
@@ -264,7 +255,6 @@
         } else {
           ref = firebase.database().ref("proposal").orderByChild("field").equalTo(category);
         }
-
         ref.on("value", function(snapshot) {
           $("#proposal_list").empty();
           snapshot.forEach(function(child){
@@ -285,7 +275,6 @@
       //     console.log((child.key + ", " + child.val()));
       //   });
       // });
-
     </script>
 </body>
 </html>
