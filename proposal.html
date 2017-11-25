@@ -10,6 +10,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <title>MyProposal.com</title>
+<style>
+.rate{
+  width:72px;
+  height:48px;
+  text-align:center;
+  float: right;
+  border:1px} 
+</style>
 </head>
 <body>
     <div class="container-fluid">
@@ -37,7 +45,10 @@
                     <div class="card-body text-black">
                     <!-- <h4 class="card-title">Primary card title</h4> -->
                         <p class="card-text" id="test1"> </p>
-                        <p class="card-text text-sm-right"><small class="text-muted ">Last updated 3 mins ago</small></p>
+                        <div class="rate"><div id="dislike"></div><button type="button" style="width:70px;height:22px;" onclick="bb()">Dislike</button></div>
+                       <div class="rate"><div id="like"></div><button type-"button" style="width:70px;height:22px;" onclick="aa()">Like</button></div>
+                         
+                        
                     </div>
                 </div>
                 <div class="card comment_content">
@@ -125,28 +136,38 @@
     
     var dom1 = document.getElementById("test1");
       var query1 = rootRef.child('proposal/' + id + '/text');
+      var rate1 = rootRef.child('proposal/' + id + '/like');
+      var rate2 = rootRef.child('proposal/' + id + '/dislike');
+      var like = document.getElementById("like");
+      var dislike = document.getElementById("dislike");
     query1.on("value", function(snap) {
         console.log(snap.val());
         dom1.innerHTML = snap.val();
       })
+    rate1.on("value", function(snap) {
+        console.log(snap.val());
+        like.innerHTML = snap.val();
+      })
+    rate2.on("value", function(snap) {
+        console.log(snap.val());
+        dislike.innerHTML = snap.val();
+      })
+
     
     
       function dd(){
-        postSmtBtn.addEventListener("click", function(){
-          if (postComment.value == "") {
-            alert("please write something!");
-            return;
-          }
-          var postRef = database.ref('/ProposalComment/' + id);
-          postRef.push().set({
-              //field: postCate.value,
-              comment: postComment.value,
-          }).then(function(){
-              console.log("post success");
-          }).catch(function(err){
-              console.error("post error", err);
-          });
-        });
+      postSmtBtn.addEventListener("click", function(){
+        var postRef = database.ref('/ProposalComment/'+id);
+        postRef.push().set({
+            //field: postCate.value,
+            comment: postComment.value,
+            
+        }).then(function(){
+            console.log("post success");
+        }).catch(function(err){
+            console.error("post error", err);
+        })
+      })
     } 
   
   window.onload = function() {
@@ -154,6 +175,8 @@
         loadProposals(id);
         initEvents();
         dd();
+        aa();
+        bb();
       }
       function initEvents() {
         $("#login").on("click", function(e) {
@@ -182,7 +205,7 @@
         function loadProposals(id) {
             var ref = firebase.database().ref("ProposalComment/" + id);
             ref.on("value", function(snapshot) {
-                $("proposal_list").empty();
+                $("#proposal_list").empty();
                 snapshot.forEach(function(child){
                 if (child.val()) {
                     var title = $('<div class="card comment_content">' + 
@@ -200,6 +223,26 @@
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
             var r = window.location.search.substr(1).match(reg);  //匹配目标参数
             if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        
+        function aa(){
+          var count1=like.innerHTML;
+          count1=parseInt(count1)+1;
+          //alert(count1);
+          
+          firebase.database().ref('proposal/'+id).update({
+               like:count1
+        });
+   
+    } 
+
+      function bb(){
+        var count2=dislike.innerHTML;
+        count2=parseInt(count2)+1;
+        //alert(count);
+        firebase.database().ref('proposal/'+id).update({
+          dislike:count2
+        });
         }
       </script>
 </body>
