@@ -2,10 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!--Javascript File-->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <title>MyProposal.com</title>
     <style type="text/css">
         @media (min-width: 768px) {
@@ -34,24 +36,26 @@
         .form-check-label {
             margin-left: 10px;
         }
+
+        #myprologo:hover {
+            cursor: pointer
+        }
         </style>
       
 </head>
 <body>
     <div class="container-fluid">
         <div class="row" style="height: 70px; background-color: #FAFAFB">
-            <div class="col-md-5" style="padding: 15px 15px 15px 50px">
+            <div id="myprologo" class="col-md-5" style="padding: 15px 15px 15px 50px">
               <h2><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
             </div>
-            <div class="col-md-7" style="padding: 10px">          
-              <button class="btn btn-action" type="button" style="float: right">Sign Up</button>
-              <button class="btn btn-primary" type="button" style="float: right">Log In</button>
-              <input type="password" name="password" placeholder="Password" style="float: right" />
-              <input type="text" name="email" placeholder="Email" style="float: right" />
+            <div class="col-md-7" style="padding: 10px">  
+                <button id ="signup" class="btn btn-action float-right">Sign Up</button>
+                <button id ="login" class="btn btn-primary float-right">Log In</button>                    
+                <button id="logout" class="btn btn-primary float-right">Log Out</button>
+                <label id="user_info" class="float-right">Welcome! <span id="disp_user"></span></label>
             </div>
-        </div>
-        
-        
+        </div>               
         <div class="row-fluid" id='messagesDiv'> 
             <form>
                 <div class="form-group">
@@ -98,7 +102,7 @@
             </form>
         </div>
     </div>
-  <script type="text/javascript">
+    <script type="text/javascript">
       // Initialize Firebase
       var config = {
         apiKey: "AIzaSyCCMcd6IQe1VjhjElv-ExFqOYAdD14S4v0",
@@ -117,21 +121,54 @@
       //var postCate = document.getElementsByClassName("form-check-input");
       var postSmtBtn = document.getElementById("postSmtBtn");
 
-      function dd(){
-      postSmtBtn.addEventListener("click", function(){
-        var postRef = database.ref('/proposal/');
-        postRef.push().set({
-            //field: postCate.value,
-            pname: postTitle.value,
-            text: postContent.value,
-        }).then(function(){
-            console.log("post success");
-        }).catch(function(err){
-            console.error("post error", err);
-        })
-    }
-    window.onload = function(){dd();}
+      function checkUser() {
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // User is signed in.
+            $("#user_info").removeClass("d-none");
+            // $("#post_proposal").removeClass("d-none");
+            $("#logout").removeClass("d-none");
+            $("#login").addClass("d-none");
+            $("#signup").addClass("d-none");
+            $("#disp_user").html(user.email);
+          } else {
+            // No user is signed in.
+            $("#user_info").addClass("d-none");
+            // $("#post_proposal").addClass("d-none");
+            $("#logout").addClass("d-none");
+            $("#login").removeClass("d-none");
+            $("#signup").removeClass("d-none");
+            // $("#disp_user").html(user.email);
+          }
+        });
+      }
+
+      function initEvent(){
+        $("#myprologo").on("click", function() {
+            window.location.href = "index.html";
+        });
+        $("#postSmtBtn").on("click", function(){
+            alert();
+            var postRef = database.ref('/proposal/');
+            postRef.push().set({
+                field: $("#propCate input:radio:checked").val(),
+                pname: $("#postTitle").val(),
+                text: $("#postContent").val(),
+                like: 0,
+                dislike: 0
+            }).then(function(){
+                console.log("post success");
+            }).catch(function(err){
+                console.error("post error", err);
+            });
+        });
+      }
+        window.onload = function() {
+            checkUser();
+            initEvent();
+        }
         
       
       </script>
 </body>
+</html>

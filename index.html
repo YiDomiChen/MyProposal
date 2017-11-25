@@ -7,12 +7,10 @@
   <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <!--Javascript File-->
-  <!-- <script type="text/javascript" src="js/jquery.js"></script> -->
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  
-  <!-- <script type="text/javascript" src="js/bootstrap.js"></script> -->
+
   <title>MyProposal.com</title>
   <style type="text/css">
       @media (min-width: 768px) {
@@ -125,11 +123,11 @@
           <h2><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
         </div>
         <div class="col-md-7" style="padding: 10px">  
-          <button id ="signup" class="btn btn-action">Sign Up</button>
-          <button id ="login" class="btn btn-primary">Log In</button>
-          <label id="user_info">Welcome! <span id="disp_user"></span></label>
-          <button id="post_proposal" class="btn btn-primary">Post</button>
-          <button id="logout" class="btn btn-primary">Log Out</button>
+          <button id ="signup" class="btn btn-action float-right">Sign Up</button>
+          <button id ="login" class="btn btn-primary float-right">Log In</button>                    
+          <button id="logout" class="btn btn-primary float-right">Log Out</button>
+          <button id="post_proposal" class="btn btn-primary float-right">Post</button>
+          <label id="user_info" class="float-right">Welcome! <span id="disp_user"></span></label>
         </div>
       </div>
       <div class="row" >
@@ -254,6 +252,10 @@
           }
           e.preventDefault();
           loadProposals($this.attr("value"));
+        });
+
+        $("#post_proposal").on("click", function(e) {
+          window.location.href = "post.html";
         });
       }
 
