@@ -7,7 +7,6 @@
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <!--Javascript File-->
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -119,7 +118,9 @@ body {
 
 .container{
 	position: relative;
-	width: 90%;
+  width: 30%;
+  border: solid 1px #cbc9c9;
+  border-radius: 4px 4px 4px 4px;
 }
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, 
@@ -327,8 +328,16 @@ form {
 </style>  
 </head>
 <body>
-  <h1>Signup Form</h1>
+  <div class="container-fluid">
+        <div class="row" style="height: 70px; background-color: #FAFAFB">
+            <div class="col-md-5" style="padding: 15px 15px 15px 50px">
+              <h2 onclick="location.href = 'index.html';"><strong><em>My<em style="color: red">Proposal</em>.com</em></strong></h2>
+            </div>
+        </div>
+  <br><br>
   <div class="container">
+  <h1>Signup Form</h1>
+  
   	<label id="icon" for="name"><i class="icon-envelope "><b>Email</b><span class = "front_input"></span></i></label>
    
 	<input id="txtEmail" type="text" placeholder="Email"><br>
@@ -365,64 +374,7 @@ form {
       messagingSenderId: "128814836934"
     };
     firebase.initializeApp(config);
-	//use for auth
-	//Get  elements
-	/*const txtEmail =document.getElementById('txtEmail');
-	const txtPassword = document.getElementById('txtPassword');
-	//const btnLogin = document.getElementById('btnLogin');
-	const btnSignUp = document.getElementById('btnSignUp');
-	const btnLogout = document.getElementById('btnLogout');
-	
-	//add login
-	/*btnLogin.addEventListener('click', e => {	
-  	const email =txtEmail.value;
-  	const pass =txtPassword.value;
-  	const auth=firebase.auth();
-  	//sign in
-  	const promise= auth.signInWithEmailAndPassword(email,pass);
-  	promise.catch(e => console.log(e.message));
-	});*/
-	
-	//signup
-	/*btnSignUp.addEventListener('click', e =>{
-    //TODO:check 4 real email
-  	const email =txtEmail.value;
-    const pass =txtPassword.value;
-    const auth=firebase.auth();	
-  	//sign in
-    const promise= auth.createUserWithEmailAndPassword(email,pass);
-    var uid = Math.random().toString(36).substr(2);
-    firebase.database().ref("User/" + uid).set({
-      email: email,
-      password: pass
-    });
-    promise.catch(e => console.log(e.message));	//.then(user => console.log(user))
-	});
-	
-	btnLogout.addEventListener('click', e => {
-		firebase.auth().signOut();
-	});
-	
-	//add a realtime listener
-	firebase.auth().onAuthStateChanged(firebaseUser =>{
-		if (firebaseUser){
-			console.log(firebaseUser);
-			btnLogout.classList.remove('hide');
-			
-			var user = firebase.auth().currentUser;
 
-			user.sendEmailVerification().then(function() {
-			// Email sent.
-			}).catch(function(error) {
-			// An error happened.
-			});
-			
-			
-		}else {
-			console.log('not logged in');
-			btnLogout.classList.add('hide');
-		}
-	});*/
 
   var _pass;     
 /**      *Check user name        */      
@@ -505,6 +457,7 @@ function regist(){
     //add a realtime listener
     firebase.auth().onAuthStateChanged(firebaseUser =>{
       if (firebaseUser){
+        window.location = "index.html";
         console.log(firebaseUser);
         btnLogout.classList.remove('hide');
       
