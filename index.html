@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,6 +105,18 @@
         font-family: Impact, Charcoal, sans-serif;
         font-size: 250%;
       }
+	  .rate
+	  {
+		text-align:center;
+        float:right;
+        font-size: 80%;
+		width:70px;
+	  }
+	  .thumb-down
+	  {
+        height: 80%;
+		width:70px;
+	  }
   </style>
   <script type="text/javascript" src="js/index.js"></script>
 </head>
@@ -148,16 +159,15 @@
       <h5>News</h5><br>
      
       <div class="news_block">
-      <div class="title">A conversation with David Simon</div>
-      <div class="date">Oct 25, 12pm<br></div>
-      <div class="title">Storygathering for Black History Month</div>
-      <div class="date">Oct 25, 5:30pm<br></div>
-      <div class="title">Mississippi Theacher Corps Recruitment Visit</div>
-      <div class="date">Oct 26, 12pm<br></div>
-      <div class="title">Apollo Men's Chorus & Oriana Women's Choir</div>
-      <div class="date">Oct 27, 8pm<br></div>
-      <div class="title">When We Imprisoned Our Own: Lessons for Today</div>
-      <div class="date">Nov 2, 5pm<br></div>
+      <div class="title" onclick="location.href = 'http://news.usc.edu/131930/students-find-home-away-from-home-at-annual-thanksgiving-dinner/';">Students find home away from home at annual Tahnksgiving dinner</div>
+      <div class="date">Nov 27, 2017<br></div>
+      <div class="title" onclick="location.href = 'http://news.usc.edu/131766/usc-hiking-class-could-help-students-tap-benefits-of-forest-bathing/';">Hiking class gets USC college students to tap benefits of 'forest bathing'</div>
+      <div class="date">Nov 24, 2017<br></div>
+      <div class="title" onclick="location.href ='http://news.usc.edu/131808/usc-track-team-lends-a-hand-to-help-free-turkeys-get-to-their-thanksgiving-tables/';">USC track team lends a hand to help free turkeys get to their Thanksgiving tables</div>
+      <div class="date">Nov 22, 2017<br></div>
+      <div class="title" onclick="location.href = 'http://calendar.usc.edu/event/musical_interventions#.WhwyNxNSyRs';">Musical Interventions</div>
+      <div class="date">Dec 2, 2017<br></div>
+
     </div>
     </div>
     </div>
@@ -253,7 +263,6 @@
           e.preventDefault();
           loadProposals($this.attr("value"));
         });
-
         $("#post_proposal").on("click", function(e) {
           window.location.href = "post.html";
         });
@@ -261,7 +270,7 @@
       function loadProposals(category) {
         var ref;
         if (category == "All"){
-          ref = firebase.database().ref("proposal");
+          ref = firebase.database().ref("proposal").orderByChild("dislike");
         } else {
           ref = firebase.database().ref("proposal").orderByChild("field").equalTo(category);
         }
@@ -271,8 +280,15 @@
             if (child.val()["pname"]) {
               var title = $('<div class="row-fluid">' + 
                 '<div class="card">' + 
-                '<div class="card-block">' + 
-                '<h4><a href="proposal.html?id=' + child.key + '">' + child.val()["pname"] + '</a></h4> </div>' + 
+                '<div class="card-block" >' + 
+                '<h4><a href="proposal.html?id=' + child.key + '">' + child.val()["pname"] + '</a>'+
+				'<p class="rate"  href="proposal.html?id=' + child.key + '"> ' +
+				'<img src="https://openclipart.org/download/285479/Thumbs-down-Circle.svg" height=25px />&nbsp' +
+				child.val()["dislike"] + '</p>'+
+				'<p class="rate"  href="proposal.html?id=' + child.key + '"> ' +
+				'<img src="https://openclipart.org/download/214028/Thumbs-Up-Circle.svg" height=35px />&nbsp' + 
+				child.val()["like"] + '</p>'+
+				'</h4> </div>' + 
                 '</div>' + 
                 '</div>');
               title.appendTo("#proposal_list");

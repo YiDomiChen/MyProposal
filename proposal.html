@@ -141,7 +141,6 @@
       var like = document.getElementById("like");
       var dislike = document.getElementById("dislike");
     query1.on("value", function(snap) {
-        console.log(snap.val());
         dom1.innerHTML = snap.val();
       })
     rate1.on("value", function(snap) {
@@ -158,12 +157,14 @@
       function dd(){
       postSmtBtn.addEventListener("click", function(){
         var postRef = database.ref('/ProposalComment/'+id);
+        $("proposal_list").empty();
         postRef.push().set({
             //field: postCate.value,
             comment: postComment.value,
             
         }).then(function(){
             console.log("post success");
+            $("textarea#postComment").val("");
         }).catch(function(err){
             console.error("post error", err);
         })
